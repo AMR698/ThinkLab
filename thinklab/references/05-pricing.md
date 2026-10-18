@@ -1,8 +1,8 @@
-# File 08 – التسعير
+# File 07 – التسعير
 
-Output file: `08 التسعير - <اسم المشروع>`.
+Output file: `07 التسعير - <اسم المشروع>`.
 
-Build on the competitor prices from file 07 (research more if needed). Use the **local currency** of the target market
+Build on the competitor prices from file 06 (research more if needed). Use the **local currency** of the target market
 and show USD in brackets where useful. State the exchange rate and date used.
 
 ## Content

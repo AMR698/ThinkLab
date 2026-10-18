@@ -58,7 +58,21 @@ Every stage document is one JSON file:
   – "Card N:" is added automatically (numbered across the file) unless the title already starts with "Card".
   – An item starting with `!` is highlighted in cyan (use for the strongest / AI / unique features).
 
-## Detailed journey style (reference file 02 – the screen-by-screen journey)
+## Legacy detailed-journey blocks (do NOT use for new projects – user journeys go in the 04-N user files)
 - `{"type":"phase","text":"المرحلة الأولى: شاشات الترحيب والتهيئة الرقمية (Onboarding & Setup)"}` – blue heading.
 - `{"type":"steps","items":["...", {"error":"..."}, {"success":"..."}, {"note":"..."}]}`
   – bullet list. `error` is auto-numbered across the whole file: "حالة الخطأ (1): ...", "حالة الخطأ (2): ...".
+
+## Per-user file style (reference "حارس البوابة — المميزات ورحلة المستخدم") – files 04-N
+Put `"theme": "role"` at the top level of the JSON (next to `file_name`). It switches to a Sans Arabic font, Arial for
+Latin text, 10.5pt body, wider margins and right-aligned paragraphs. Blocks:
+- `{"type":"h1","text":"القسم الأول — المميزات"}` – blue 16pt with a thin rule under it (`"before":0` for the very first one).
+- `{"type":"h2","text":"الكارت الأول: الدخول"}` – blue 13pt.
+- `{"type":"h3","text":"الزائر المدعو"}` – dark blue 12pt.
+- `{"type":"h4","text":"الزائر يقول إنه صاحب الوحدة"}` – blue italic 11pt.
+- `{"type":"meta","items":[{"label":"التطبيق","text":"..."}, ...]}` – bold label + text lines (file header).
+- `{"type":"subtitle","text":"دخول الزوار"}` – bold group title inside a feature card.
+- `{"type":"bullets","items":["...","..."]}` – • list.
+- `{"type":"divider"}` – thin horizontal line between sections.
+- `{"type":"paragraph","text":"**إذا كان الرمز خاطئاً:** \"الرمز غير صحيح.\""}` – narrative sentence; `**…**` for the bold parts.
+- `{"type":"table","headers":[...],"rows":[...],"header_style":"grey"}` – grey header row, black text.

@@ -15,7 +15,13 @@ The user wants every question as **clickable choices, with room to write their o
 
 **If you have a tool that shows the user questions with clickable options** (on claude.ai it is usually called
 `ask_user_input` / `ask_user_input_v0`), use it for every question in every round:
-- Each question: a short title + 2–4 options. **Your recommendation is the first option and ends with "(اقتراحي)".**
+- Each question: a short, plain title + 2–4 options. **Your recommendation is the first option and ends with "(اقتراحي)".**
+- **Every option must be understandable on its own**: a short name + a few plain words on what it does for the user,
+  e.g. "طلب مستند بالصورة: العميل يصوّر الفاتورة وتوصل للمكتب على طول" – never a bare label like "طلب مستند بالصورة".
+- **No numbers inside options** (no "134 مهام شهرية…"). Numbers are only for the text lists in chat.
+- **"(اقتراحي)" on the 1–2 strongest options only**, never on all of them.
+- **Do not pre-select options** – the user picks; if they skip, use your recommendation.
+- Simple everyday Egyptian Arabic in options; explain any technical term in the same option.
 - Single choice for "pick one" questions; multi-select for "pick all that apply" (users, features, ideas).
 - Respect the tool's limits (typically up to 3 questions per call, 2–4 options per question). If a round has more,
   split it into several calls one after another.
@@ -71,7 +77,7 @@ Summarise what was agreed in a compact message:
 - الافتراضات (السوق، المنصة، نموذج الربح، الشريحة الأولى)
 - المستخدمين المعتمدين
 - عدد المميزات لكل مستخدم (أساسي / مقترح / لاحق) + أهم 5 مميزات مميزة
-- قائمة الملفات اللي هتطلع بالترتيب (include one journey file per user and one detailed journey file per main module)
+- قائمة الملفات اللي هتطلع بالترتيب (01، 02، 03، ثم ملف واحد لكل مستخدم 04-1، 04-2…، ثم 05، 06، 07)
 Then ask one single-choice question: **"أبدأ أطلع الملفات كلها ورا بعض؟"** –
 "أيوه، ابدأ (اقتراحي)" / "استنى، عاوز أعدّل حاجة".
 

@@ -1,6 +1,6 @@
 ---
 name: thinklab
-description: Discuss a startup / app / software project idea with the user (who will use it, which features, suggestions) and then produce a full set of styled Arabic PDFs (plus DOCX) - idea analysis, system and user features, app structure and user journeys, screen-by-screen detailed journeys, market analysis, competitors and pricing. Use whenever the user shares a project idea or asks to study, analyse, evaluate or plan one (e.g. "عندي فكرة مشروع", "حلل الفكرة", "فكرة مشروع للمخازن", "دراسة سوق", "المنافسين", "تسعير", "رحلة المستخدم", "ThinkLab").
+description: Discuss a startup / app / software project idea with the user (who will use it, which features, suggestions) and then produce a full set of styled Arabic PDFs (plus DOCX) - idea analysis, system and user features, one complete file per user type (features + screen-by-screen journey + edge cases), market analysis, competitors and pricing. Use whenever the user shares a project idea or asks to study, analyse, evaluate or plan one (e.g. "عندي فكرة مشروع", "حلل الفكرة", "فكرة مشروع للمخازن", "دراسة سوق", "المنافسين", "تسعير", "رحلة المستخدم", "ThinkLab").
 ---
 
 # ThinkLab – من الفكرة إلى ملفات المشروع
@@ -10,7 +10,8 @@ Two phases:
    then agree on the features of each user (you suggest, the user picks / removes / adds), then confirm.
    No files are generated in this phase.
 2. **الملفات** – after the user confirms, generate ALL documents back to back, without stopping between files.
-   Every document looks like the user's own reference documents (Arabic RTL, pink/cyan/red/yellow styling).
+   Every document looks like the user's own reference documents (Arabic RTL; pink/cyan/red/yellow styling for 01–03 and
+   05–07, blue Word-style headings for the per-user files 04-N).
 
 Talk to the user in their language (default: Egyptian Arabic, friendly and short). Read
 `references/style-guide.md` and `references/json-format.md` once at the start.
@@ -30,15 +31,17 @@ you have one (e.g. `ask_user_input` on claude.ai), recommendation first marked "
 |---|---|---|
 | 01 | `01 تحليل الفكرة` | `references/01-idea-analysis.md` |
 | 02–03 | `02 مميزات النظام`, `03 مميزات المستخدم` | `references/02-features.md` |
-| 04 | `04 الهيكل ورحلة <نوع المستخدم>` – one file per agreed user type | `references/06-structure-journeys.md` |
-| 05 | `05 الرحلة التفصيلية - <اسم الملف>` – one file per main module of the main user (and other users' key modules) | `references/07-detailed-journey.md` |
-| 06 | `06 تحليل السوق` (web research) | `references/03-market.md` |
-| 07 | `07 المنافسين` (web research) | `references/04-competitors.md` |
-| 08 | `08 التسعير` (web research) | `references/05-pricing.md` |
+| 04-N | `04-1 <الدور> — المميزات ورحلة المستخدم`, `04-2 …` – exactly ONE file per agreed user type | `references/04-role-file.md` |
+| 05 | `05 تحليل السوق` (web research) | `references/03-market.md` |
+| 06 | `06 المنافسين` (web research) | `references/04-competitors.md` |
+| 07 | `07 التسعير` (web research) | `references/05-pricing.md` |
+
+Never create separate structure / detailed-journey / per-module files: every screen and edge case of a user goes inside
+that user's single 04-N file. Total files = 6 + number of agreed user types.
 
 For each file:
 1. Read its reference file.
-2. Files 06–08: do real web research (several searches in parallel, Arabic and English) and cite sources.
+2. Files 05–07: do real web research (several searches in parallel, Arabic and English) and cite sources.
    Never invent numbers, prices or competitor facts. If web search is unavailable, say so and mark figures as "تقدير".
 3. Content MUST follow what was agreed in the discussion: the same user types, the same features
    (MVP / ⭐ / later), the user's additions and removals. Be exhaustive – full detail, not summaries.
@@ -58,12 +61,13 @@ to write "كمّل"; then continue from the next unfinished file.
 
 **At the end**: list all generated files in order, give 3–5 key takeaways, and ask:
 "عاوز تعدّل في ملف معين؟ قولي رقم الملف والتعديل." An edit regenerates only the affected file(s)
-(and any later file that depends on it, e.g. a removed feature must disappear from the journeys too).
+(and any later file that depends on it, e.g. a removed feature must disappear from the user files too).
 
 ## Quality checklist before generating each PDF
 - Matches the agreed users and features from the discussion.
 - Arabic, detailed, no "إلخ"; UI text in the target market's dialect; English terms where natural.
 - Correct block types for the file (see the skeleton in its reference file).
 - Feature cards: 25–60 bullets each, the user's ⭐ picks marked with `!`.
-- Detailed journeys: every screen, button text in quotes, every error state (auto-numbered) and success state.
+- User files 04-N: all nine sections of `04-role-file.md`, every screen with its "حالات" paragraph, button text in quotes,
+  every branch as a bold "إذا …:" sentence.
 - Market / competitors / pricing: every figure has a source or is labelled "تقدير" with the calculation.

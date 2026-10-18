@@ -47,10 +47,27 @@ WHITE = "FFFFFF"
 BLACK = "000000"
 HEADING_BLUE = "365F91"
 GREEN = "00B050"
+# "role" theme colours, from the user's per-role reference ("حارس البوابة — المميزات ورحلة المستخدم").
+ROLE_BLUE = "2E74B5"
+ROLE_DARK_BLUE = "1F4D78"
+ROLE_GREY = "EFEFEF"
+ROLE_RULE = "BFBFBF"
 
 AR_FONT = "Amiri"
 LATIN_FONT = "Times New Roman"
 BODY_SIZE = 12
+
+# theme -> (Arabic font, Latin font, body size, page margin in cm, default paragraph alignment)
+THEMES = {
+    "classic": ("Amiri", "Times New Roman", 12, 1.27, "both"),
+    "role": ("Noto Sans Arabic", "Arial", 10.5, 1.76, "right"),
+}
+
+
+def apply_theme(name):
+    global AR_FONT, LATIN_FONT, BODY_SIZE
+    AR_FONT, LATIN_FONT, BODY_SIZE, margin, align = THEMES[name]
+    return margin, align
 
 ARABIC_RE = re.compile(r"[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]")
 LATIN_CHUNK_RE = re.compile(r"([A-Za-z][A-Za-z0-9&/+\-_'.]*(?:[ ]+[A-Za-z0-9&/+\-_'.]+)*)")
@@ -103,7 +120,7 @@ def para_indent_start(p, start_twips, hanging_twips=0):
 
 
 def add_run(p, text, color=None, bold=False, size=None, bg=None, highlight=None,
-            font=None, rtl=None):
+            font=None, rtl=None, italic=False):
     run = p.add_run(text)
     rPr = run._r.get_or_add_rPr()
     f = font or AR_FONT
@@ -117,6 +134,9 @@ def add_run(p, text, color=None, bold=False, size=None, bg=None, highlight=None,
     if bold:
         _set(rPr, "w:b")
         _set(rPr, "w:bCs")
+    if italic:
+        _set(rPr, "w:i")
+        _set(rPr, "w:iCs")
     if color:
         _set(rPr, "w:color", **{"w:val": color})
     _set(rPr, "w:sz", **{"w:val": sz})
@@ -180,13 +200,14 @@ class Builder:
         self.error_no = 0
         self.success_no = 0
         self.card_no = 0
+        self.margin, self.default_align = apply_theme(data.get("theme", "classic"))
         self._setup()
 
     def _setup(self):
         sec = self.doc.sections[0]
         sec.page_width, sec.page_height = Cm(21.0), Cm(29.7)
         for side in ("top_margin", "bottom_margin", "left_margin", "right_margin"):
-            setattr(sec, side, Cm(1.27))
+            setattr(sec, side, Cm(self.margin))
         _set(sec._sectPr, "w:bidi")
         st = self.doc.styles["Normal"]
         st.font.name = LATIN_FONT
@@ -227,7 +248,9 @@ class Builder:
         add_rich(p, b["text"], color=color, size=size, bold=b.get("bold", False))
 
     def b_paragraph(self, b):
-        p = self.p(b.get("align", "both"))
+        role = self.default_align == "right"
+        p = self.p(b.get("align", self.default_align), after=b.get("after", 3 if role else 2),
+                   line=1.0 if role else 1.1)
         add_rich(p, b["text"], size=b.get("size"), color=b.get("color"))
 
     def b_spacer(self, b):
@@ -353,6 +376,50 @@ class Builder:
                 add_rich(p, prefix, color=color)
             add_rich(p, text)
 
+    # --- role file (reference: "حارس البوابة — المميزات ورحلة المستخدم") ---
+    def _heading(self, text, color, size, before, after, italic=False, rule=False):
+        p = self.p("right", before=before, after=after, line=1.0)
+        p.paragraph_format.keep_with_next = True
+        if rule:
+            pBdr = _set(p._p.get_or_add_pPr(), "w:pBdr")
+            _set(pBdr, "w:bottom", **{"w:val": "single", "w:sz": 6, "w:space": 4, "w:color": ROLE_RULE})
+        add_rich(p, text, color=color, size=size, italic=italic)
+
+    def b_h1(self, b):
+        self._heading(b["text"], ROLE_BLUE, 16, b.get("before", 16), 8, rule=True)
+
+    def b_h2(self, b):
+        self._heading(b["text"], ROLE_BLUE, 13, 10, 4)
+
+    def b_h3(self, b):
+        self._heading(b["text"], ROLE_DARK_BLUE, 12, 8, 3)
+
+    def b_h4(self, b):
+        self._heading(b["text"], ROLE_BLUE, 11, 6, 2, italic=True)
+
+    def b_meta(self, b):
+        for row in b["items"]:
+            p = self.p("right", after=1, line=1.0)
+            add_rich(p, row["label"] + ": ", bold=True)
+            add_rich(p, row["text"])
+
+    def b_subtitle(self, b):
+        p = self.p("right", before=4, after=2, line=1.0)
+        p.paragraph_format.keep_with_next = True
+        add_rich(p, b["text"], bold=True)
+
+    def b_bullets(self, b):
+        for it in b["items"]:
+            p = self.p("right", after=0, line=1.0)
+            para_indent_start(p, 540, 270)
+            add_run(p, "•\t")
+            add_rich(p, it)
+
+    def b_divider(self, b):
+        p = self.p("right", before=6, after=6, line=1.0)
+        pBdr = _set(p._p.get_or_add_pPr(), "w:pBdr")
+        _set(pBdr, "w:top", **{"w:val": "single", "w:sz": 4, "w:space": 1, "w:color": ROLE_RULE})
+
     # --- tables & sources ---
     def b_table(self, b):
         if b.get("title"):
@@ -365,6 +432,10 @@ class Builder:
         _set(tblPr, "w:bidiVisual")
         hl_col = b.get("highlight_row")
         for r, row in enumerate([headers] + rows):
+            trPr = t.rows[r]._tr.get_or_add_trPr()
+            _set(trPr, "w:cantSplit")
+            if r == 0:
+                _set(trPr, "w:tblHeader")
             for c, val in enumerate(row):
                 cell = t.cell(r, c)
                 cell.text = ""
@@ -372,14 +443,17 @@ class Builder:
                 para_rtl(p, "center" if r == 0 else "right")
                 para_spacing(p, 1, 1, 1.0)
                 if r == 0:
+                    grey = b.get("header_style") == "grey"
                     tcPr = cell._tc.get_or_add_tcPr()
-                    _set(tcPr, "w:shd", **{"w:val": "clear", "w:color": "auto", "w:fill": CYAN})
-                    add_rich(p, str(val), color=WHITE, bold=True, size=11)
+                    _set(tcPr, "w:shd", **{"w:val": "clear", "w:color": "auto",
+                                          "w:fill": ROLE_GREY if grey else CYAN})
+                    add_rich(p, str(val), color=BLACK if grey else WHITE, bold=True,
+                             size=BODY_SIZE if grey else 11)
                 else:
                     if hl_col is not None and r - 1 == hl_col:
                         tcPr = cell._tc.get_or_add_tcPr()
                         _set(tcPr, "w:shd", **{"w:val": "clear", "w:color": "auto", "w:fill": "FFF2CC"})
-                    add_rich(p, str(val), size=10)
+                    add_rich(p, str(val), size=min(10, BODY_SIZE))
         self.p(after=2)
 
     def b_sources(self, b):
