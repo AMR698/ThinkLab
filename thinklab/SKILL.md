@@ -17,8 +17,12 @@ Talk to the user in their language (default: Egyptian Arabic, friendly and short
 
 ## Phase 1 – النقاش
 Follow `references/00-discovery.md` exactly: Round 1 فهم الفكرة → Round 2 المستخدمين → Round 3 المميزات لكل مستخدم →
-Round 4 التأكيد. One message per round, then wait. Do not skip it and do not produce any PDF before the confirmation,
+Round 4 التأكيد. One round at a time, then wait. Do not skip it and do not produce any PDF before the confirmation,
 unless the user explicitly asks to skip the discussion.
+
+Every question is **multiple choice with room for a free-text answer**: use the clickable-options question tool when
+you have one (e.g. `ask_user_input` on claude.ai), recommendation first marked "(اقتراحي)"; otherwise use the
+أ/ب/ج + ✍️ text format. Details in `references/00-discovery.md` → "How to ask".
 
 ## Phase 2 – الملفات (in this order)
 
