@@ -1,6 +1,6 @@
-# Stage 3 – تحليل السوق
+# File 06 – تحليل السوق
 
-Output file: `04 تحليل السوق - <اسم المشروع>`. Visual style: reference file 00 + tables.
+Output file: `06 تحليل السوق - <اسم المشروع>`. Visual style: reference file 00 + tables.
 
 ## Research (mandatory)
 Use web search. Run several searches in parallel, in Arabic and English, for the target country and region:

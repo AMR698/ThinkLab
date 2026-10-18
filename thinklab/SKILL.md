@@ -1,65 +1,65 @@
 ---
 name: thinklab
-description: Analyse a startup / app / software project idea step by step and produce a styled Arabic PDF (plus DOCX) for every stage - idea analysis and realistic additions, system and user features, market analysis, competitors, pricing, app structure and user journeys, and screen-by-screen detailed journeys. Use whenever the user shares a project idea or asks to study, analyse, evaluate or plan one (e.g. "عندي فكرة مشروع", "حلل الفكرة", "فكرة مشروع للمخازن", "دراسة سوق", "المنافسين", "تسعير", "رحلة المستخدم", "ThinkLab").
+description: Discuss a startup / app / software project idea with the user (who will use it, which features, suggestions) and then produce a full set of styled Arabic PDFs (plus DOCX) - idea analysis, system and user features, app structure and user journeys, screen-by-screen detailed journeys, market analysis, competitors and pricing. Use whenever the user shares a project idea or asks to study, analyse, evaluate or plan one (e.g. "عندي فكرة مشروع", "حلل الفكرة", "فكرة مشروع للمخازن", "دراسة سوق", "المنافسين", "تسعير", "رحلة المستخدم", "ThinkLab").
 ---
 
 # ThinkLab – من الفكرة إلى ملفات المشروع
 
-You walk the user through their project idea **one stage at a time**. Every stage ends with a PDF that looks like the
-user's own reference documents (Arabic RTL, pink/cyan/red/yellow styling), then you stop and ask for approval.
+Two phases:
+1. **النقاش (Discovery)** – a real back-and-forth conversation: understand the idea, agree on the user types,
+   then agree on the features of each user (you suggest, the user picks / removes / adds), then confirm.
+   No files are generated in this phase.
+2. **الملفات** – after the user confirms, generate ALL documents back to back, without stopping between files.
+   Every document looks like the user's own reference documents (Arabic RTL, pink/cyan/red/yellow styling).
 
-Talk to the user in their language (default: Egyptian Arabic, friendly and short). The documents themselves follow
-`references/style-guide.md`.
+Talk to the user in their language (default: Egyptian Arabic, friendly and short). Read
+`references/style-guide.md` and `references/json-format.md` once at the start.
 
-## Stages
+## Phase 1 – النقاش
+Follow `references/00-discovery.md` exactly: Round 1 فهم الفكرة → Round 2 المستخدمين → Round 3 المميزات لكل مستخدم →
+Round 4 التأكيد. One message per round, then wait. Do not skip it and do not produce any PDF before the confirmation,
+unless the user explicitly asks to skip the discussion.
 
-| # | Stage | Reference to read first | Output file(s) |
-|---|---|---|---|
-| 1 | تحليل الفكرة + أفكار واقعية + يجب مراعاة الآتي | `references/01-idea-analysis.md` | `01 تحليل الفكرة` |
-| 2 | مميزات النظام + مميزات المستخدم (كروت) | `references/02-features.md` | `02 مميزات النظام`, `03 مميزات المستخدم` |
-| 3 | تحليل السوق (بحث ويب) | `references/03-market.md` | `04 تحليل السوق` |
-| 4 | المنافسين (بحث ويب) | `references/04-competitors.md` | `05 المنافسين` |
-| 5 | التسعير (بحث ويب) | `references/05-pricing.md` | `06 التسعير` |
-| 6 | الهيكل الرئيسي ورحلة كل مستخدم | `references/06-structure-journeys.md` | `07 الهيكل ورحلة <مستخدم>` × users |
-| 7 | الرحلة التفصيلية شاشة بشاشة | `references/07-detailed-journey.md` | `08 الرحلة التفصيلية - <ملف>` × modules |
+## Phase 2 – الملفات (in this order)
 
-Always also read `references/style-guide.md` and `references/json-format.md` once at the start.
+| # | File(s) | Reference to read first |
+|---|---|---|
+| 01 | `01 تحليل الفكرة` | `references/01-idea-analysis.md` |
+| 02–03 | `02 مميزات النظام`, `03 مميزات المستخدم` | `references/02-features.md` |
+| 04 | `04 الهيكل ورحلة <نوع المستخدم>` – one file per agreed user type | `references/06-structure-journeys.md` |
+| 05 | `05 الرحلة التفصيلية - <اسم الملف>` – one file per main module of the main user (and other users' key modules) | `references/07-detailed-journey.md` |
+| 06 | `06 تحليل السوق` (web research) | `references/03-market.md` |
+| 07 | `07 المنافسين` (web research) | `references/04-competitors.md` |
+| 08 | `08 التسعير` (web research) | `references/05-pricing.md` |
 
-## Workflow
-
-**Start.** When the user shares an idea, greet them in one line, restate the idea in one sentence, and — only if
-missing — ask up to 4 short questions in a single message: target country/city, target users, product type
-(mobile app / web / SaaS / other), and anything they already have in mind (budget, must-have features).
-If they say "كمّل" or the answers are obvious, state assumptions and continue.
-
-**For each stage:**
-1. Read that stage's reference file.
-2. Stages 3, 4, 5: do real web research (several searches in parallel, Arabic and English). Cite sources.
-   Never invent numbers, prices or competitor facts. If web search is unavailable, say so and mark figures as estimates.
-3. Build on everything already approved (earlier stage JSON files and the user's comments).
-4. Write the content as JSON (format in `references/json-format.md`) to `<work>/stage-N.json`
+For each file:
+1. Read its reference file.
+2. Files 06–08: do real web research (several searches in parallel, Arabic and English) and cite sources.
+   Never invent numbers, prices or competitor facts. If web search is unavailable, say so and mark figures as "تقدير".
+3. Content MUST follow what was agreed in the discussion: the same user types, the same features
+   (MVP / ⭐ / later), the user's additions and removals. Be exhaustive – full detail, not summaries.
+4. Write the JSON (format in `references/json-format.md`) to `<work>/NN-name.json`
    (`<work>` = `/mnt/user-data/outputs/thinklab-<project-slug>/` if that folder exists, otherwise a working folder you choose).
-   Be exhaustive – the user wants full detail, not summaries.
-5. Generate the files:
+5. Generate:
    ```bash
-   python3 <skill-dir>/scripts/build_doc.py <work>/stage-N.json --out <work>
+   python3 <skill-dir>/scripts/build_doc.py <work>/NN-name.json --out <work>
    ```
-   The script writes a `.docx` and converts it to `.pdf` with LibreOffice (fonts are bundled in `assets/fonts`).
-   If the PDF step reports FAILED, deliver the DOCX and tell the user.
-6. Share the PDF (and DOCX) with the user, plus a short summary in chat: 3–6 bullet highlights of the stage.
-7. Ask: **"موافق ننتقل للمرحلة اللي بعدها (<name>)؟ ولا تحب تعدّل أو تضيف حاجة؟"** and STOP. Wait for the reply.
-8. If the user asks for changes: edit the JSON, regenerate, share again, and ask again.
+   The script writes a `.docx` and converts it to `.pdf` with LibreOffice (fonts bundled in `assets/fonts`).
+   If the PDF step reports FAILED, deliver the DOCX and say so.
+6. Share the PDF right away with ONE line ("✅ خلص ملف 01 تحليل الفكرة") and continue immediately with the next file.
+   Do NOT ask for approval between files.
 
-Never run two stages in one turn unless the user explicitly asks ("اعمل الباقي مرة واحدة").
+If your reply gets cut off or you run out of room, say exactly which files are done and which remain, and tell the user
+to write "كمّل"; then continue from the next unfinished file.
 
-**Stage 6 and 7** produce several files. Before starting, list the user types (stage 6) or the main modules (stage 7)
-you plan to cover and let the user confirm or pick, then deliver them one by one or together as the user prefers.
-
-**At the end** list all generated files in order and offer next steps (e.g. MVP backlog, pitch deck, wireframes).
+**At the end**: list all generated files in order, give 3–5 key takeaways, and ask:
+"عاوز تعدّل في ملف معين؟ قولي رقم الملف والتعديل." An edit regenerates only the affected file(s)
+(and any later file that depends on it, e.g. a removed feature must disappear from the journeys too).
 
 ## Quality checklist before generating each PDF
+- Matches the agreed users and features from the discussion.
 - Arabic, detailed, no "إلخ"; UI text in the target market's dialect; English terms where natural.
-- Correct block types for the stage (see the skeleton in its reference file).
-- Feature cards: 25–60 bullets each, strongest items marked with `!`.
+- Correct block types for the file (see the skeleton in its reference file).
+- Feature cards: 25–60 bullets each, the user's ⭐ picks marked with `!`.
 - Detailed journeys: every screen, button text in quotes, every error state (auto-numbered) and success state.
 - Market / competitors / pricing: every figure has a source or is labelled "تقدير" with the calculation.

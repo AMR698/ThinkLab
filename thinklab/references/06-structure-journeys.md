@@ -1,7 +1,10 @@
-# Stage 6 – الهيكل الرئيسي ورحلات المستخدمين
+# File 04 – الهيكل الرئيسي ورحلات المستخدمين
 
-Output: one file per user type: `07 الهيكل ورحلة <نوع المستخدم> - <اسم المشروع>`
+Output: one file per user type: `04 الهيكل ورحلة <نوع المستخدم> - <اسم المشروع>`
 (e.g. رحلة مدير المخزن، رحلة أمين المخزن، رحلة المشتريات). Visual style: reference file 01.
+
+Use only the agreed user types and their agreed features from the discussion; every MVP and ⭐ feature of the user
+must be reachable from some module or journey in their file.
 
 ## Content (follow this order exactly)
 1. `basmala`.

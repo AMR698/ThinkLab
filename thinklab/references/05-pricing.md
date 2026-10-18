@@ -1,8 +1,8 @@
-# Stage 5 – التسعير
+# File 08 – التسعير
 
-Output file: `06 التسعير - <اسم المشروع>`.
+Output file: `08 التسعير - <اسم المشروع>`.
 
-Build on the competitor prices from stage 4 (research more if needed). Use the **local currency** of the target market
+Build on the competitor prices from file 07 (research more if needed). Use the **local currency** of the target market
 and show USD in brackets where useful. State the exchange rate and date used.
 
 ## Content

@@ -1,9 +1,14 @@
-# Stage 2 – المميزات (مميزات النظام + مميزات كل مستخدم)
+# Files 02–03 – المميزات (مميزات النظام + مميزات كل مستخدم)
 
 Output files (two, like the user's references 02 and 03):
 - `02 مميزات النظام - <اسم المشروع>` – back-office / admin side. Title banner: "مميزاته داخل التطبيق".
 - `03 مميزات المستخدم - <اسم المشروع>` – what each end-user type gets. Title banner: "مميزات المستخدم داخل التطبيق".
   If there are several user types, one `banner(cyan_white)` per user type followed by its cards.
+
+## Source of truth
+Use exactly the features agreed in the discussion (round 3): every MVP and ⭐ feature the user kept must appear,
+removed ones must not, the user's additions must appear. You may add supporting detail bullets (screens, alerts,
+reports that a kept feature needs) to reach the depth below. Mark the user's ⭐ picks with `!`.
 
 ## How to build the cards
 - Group features into **6–12 cards**, each an "operating system" for one domain, English title, e.g.
@@ -15,7 +20,7 @@ Output files (two, like the user's references 02 and 03):
   Mix Arabic and English like the references ("• Next Best Action لكل صنف", "• Smart Reorder Engine").
 - Start each bullet with what it does, not with a verb in the imperative.
 - Prefix the strongest / unique / AI items with `!` (cyan highlight), roughly 10–20% of items.
-- Realism: put a final card `Card N: Roadmap – MVP vs Later` with bullets "MVP: ..." / "المرحلة الثانية: ..." /
+- Realism: put a final card `Card N: Roadmap – MVP vs Later` built from the agreed MVP / ⭐ / ⏳ split, with bullets "MVP: ..." / "المرحلة الثانية: ..." /
   "المرحلة الثالثة: ..." so the user sees what ships first.
 
 ## Block skeleton

@@ -1,6 +1,6 @@
-# Stage 4 – المنافسين
+# File 07 – المنافسين
 
-Output file: `05 المنافسين - <اسم المشروع>`.
+Output file: `07 المنافسين - <اسم المشروع>`.
 
 ## Research (mandatory)
 Web-search for: local competitors in the target country, regional (MENA/GCC) players, global products used locally,

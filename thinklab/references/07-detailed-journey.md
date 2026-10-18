@@ -1,7 +1,7 @@
-# Stage 7 – الرحلة التفصيلية شاشة بشاشة
+# File 05 – الرحلة التفصيلية شاشة بشاشة
 
 Output: one file per main module (or per user type for small products):
-`08 الرحلة التفصيلية - <اسم الملف> - <اسم المشروع>`. Visual style: the user's detailed journey reference
+`05 الرحلة التفصيلية - <اسم الملف> - <اسم المشروع>`. Visual style: the user's detailed journey reference
 ("ملف التعليم والتطوير").
 
 ## Content
